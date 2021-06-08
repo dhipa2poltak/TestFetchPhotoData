@@ -1,0 +1,9 @@
+<resources>
+  <string name="app_name">Test Fetch Photo</string>
+  <string name="msg_loading_file">loading…</string>
+  <string name="user_image">place holder image</string>
+  <string name="type_title">type title…</string>
+  <string name="search_action">Search Action</string>
+  <string name="no_data">No Data</string>
+  <string name="sync_data">Sync Data</string>
+</resources>

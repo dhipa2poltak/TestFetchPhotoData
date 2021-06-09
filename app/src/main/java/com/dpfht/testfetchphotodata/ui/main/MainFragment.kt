@@ -70,7 +70,10 @@ class MainFragment : Fragment() {
     })
 
     viewModel.toastMessage.observe(viewLifecycleOwner, { msg ->
-      Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+      if (msg.length > 0) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+        viewModel.clearToastMessage()
+      }
     })
 
     viewModel.foundPhotos.observe(viewLifecycleOwner, { photos ->
@@ -82,7 +85,9 @@ class MainFragment : Fragment() {
       viewModel.searchPhotoByTitle(binding.etSearch.text.toString())
     }
 
-    viewModel.start()
+    if (viewModel.foundPhotos.value?.size ?: 0 == 0) {
+      viewModel.start()
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

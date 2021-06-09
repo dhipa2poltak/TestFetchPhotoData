@@ -22,6 +22,10 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
   val toastMessage: LiveData<String>
   get() = _toastMessage
 
+  fun clearToastMessage() {
+    _toastMessage.value = ""
+  }
+
   private val _photos = MutableLiveData<List<Photo>>()
 
   private val _foundPhotos = MutableLiveData<List<Photo>>()

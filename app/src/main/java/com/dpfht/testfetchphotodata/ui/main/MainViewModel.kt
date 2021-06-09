@@ -71,7 +71,7 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
     }
 
     _photos.value?.let { photos ->
-      val tmp = photos.filter { photo -> photo.title.lowercase().contains(title) }.sortedBy { photo -> photo.title.lowercase() }
+      val tmp = photos.filter { photo -> photo.title.lowercase().contains(title.lowercase()) }.sortedBy { photo -> photo.title.lowercase() }
       _foundPhotos.value = tmp
     }
   }

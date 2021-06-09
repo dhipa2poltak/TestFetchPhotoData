@@ -52,15 +52,21 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
 
   private fun getPhotosFromApi() {
     viewModelScope.launch(Dispatchers.Main) {
+      _showLoadingDialog.value = true
       val tmp = withContext(Dispatchers.IO) { appRepository.getPhotosFromApi() }
-      tmp?.let { listPhoto ->
-        _showLoadingDialog.value = true
-        val str = withContext(Dispatchers.IO) { Gson().toJson(listPhoto) }
-        withContext(Dispatchers.IO) { appRepository.saveCache(str) }
-        _showLoadingDialog.value = false
+      if (tmp != null) {
+        tmp.let { listPhoto ->
+          _showLoadingDialog.value = true
+          val str = withContext(Dispatchers.IO) { Gson().toJson(listPhoto) }
+          withContext(Dispatchers.IO) { appRepository.saveCache(str) }
+          _showLoadingDialog.value = false
 
-        _photos.value = listPhoto
-        _foundPhotos.value = listPhoto.sortedBy { photo -> photo.title.lowercase() }
+          _photos.value = listPhoto
+          _foundPhotos.value = listPhoto.sortedBy { photo -> photo.title.lowercase() }
+          _showLoadingDialog.value = false
+        }
+      } else {
+        _showLoadingDialog.value = false
       }
     }
   }
